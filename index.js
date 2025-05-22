@@ -27,10 +27,9 @@ fetch(url, config)
                 } else {
                     console.log("No se ha pasado un dato");
                 }
-
                 break;
 
-            case 'POST': // npm run start POST products title=T-Shirt-Rex price=300 category=remeras
+            case 'POST': // npm run start POST products T-Shirt-Rex 300 remeras
                 if (args[1] === undefined || args[1] != 'products' || args[2] === undefined || args[3] === undefined || args[4] === undefined) {
                     console.log(`No se ha pasado el argumento esperado`);
                 } else {
@@ -60,17 +59,14 @@ fetch(url, config)
                 }
                 break;*/
             case 'DELETE': //npm run start DELETE products/7
-                if (args[1] !== undefined && args[1].charCodeAt(8) == 47) {
+                if (args[1] !== undefined && args[1].charCodeAt(8) == 47 && args[1].length > 9) {
                     let id = obtenerId(args[1])
-                    console.log(id)
                     fetch(url + '/' + id, {
                         method: 'DELETE'
                     })
                         .then(response => response.json())
                         .then(data => console.log("Producto eliminado", data))
                         .catch(error => console.error('Error al eliminar el producto:', error));
-
-
                     //console.log(`El item con id: ${args[1]}  se eliminó con éxito`);
                 } else {
                     console.log(`No se ha podido eliminar el item, no se ha pasado el id`);
