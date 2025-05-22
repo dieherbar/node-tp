@@ -49,7 +49,7 @@ fetch(url, config)
                         .then(data => console.log(data))
                         .catch(error => console.error('Error:', error));
 
-                    //console.log(`Recibimos ${args[2]}, ${args[3]} y ${args[4]}   satisfactoriamente`);
+                    //console.log(`Recibimos ${args[2]}, ${args[3]} y ${args[4]} satisfactoriamente`);
                 }
                 break;
             /*case 'PUT':
