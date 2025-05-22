@@ -30,20 +30,35 @@ fetch(url, config)
 
                 break;
 
-            case 'POST':
-                if (args[1] === undefined) {
-                    console.log(`No se ha pasado el id`);
+            case 'POST': // npm run start POST products title=T-Shirt-Rex price=300 category=remeras
+                if (args[1] === undefined || args[1] != 'products' || args[2] === undefined || args[3] === undefined || args[4] === undefined) {
+                    console.log(`No se ha pasado el argumento esperado`);
                 } else {
-                    console.log(`Recibimos ${args[1]}  satisfactoriamente`);
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            title: args[2],
+                            price: args[3],
+                            category: args[4],
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => console.log(data))
+                        .catch(error => console.error('Error:', error));
+
+                    //console.log(`Recibimos ${args[2]}, ${args[3]} y ${args[4]} satisfactoriamente`);
                 }
                 break;
-            case 'PUT':
+            /*case 'PUT':
                 if (args[1] != undefined) {
                     console.log(`Modificamos el item con id: ${args[1]}  satisfactoriamente`);
                 } else {
                     console.log(`No se ha podido modificar el item, no se ha pasado el id`);
                 }
-                break;
+                break;*/
             case 'DELETE':
                 if (args[1] !== undefined) {
                     console.log(`El item con id: ${args[1]}  se eliminó con éxito`);
