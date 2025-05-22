@@ -59,9 +59,19 @@ fetch(url, config)
                     console.log(`No se ha podido modificar el item, no se ha pasado el id`);
                 }
                 break;*/
-            case 'DELETE':
-                if (args[1] !== undefined) {
-                    console.log(`El item con id: ${args[1]}  se eliminó con éxito`);
+            case 'DELETE': //npm run start DELETE products/7
+                if (args[1] !== undefined && args[1].charCodeAt(8) == 47) {
+                    let id = obtenerId(args[1])
+                    console.log(id)
+                    fetch(url + '/' + id, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => console.log("Producto eliminado", data))
+                        .catch(error => console.error('Error al eliminar el producto:', error));
+
+
+                    //console.log(`El item con id: ${args[1]}  se eliminó con éxito`);
                 } else {
                     console.log(`No se ha podido eliminar el item, no se ha pasado el id`);
                 }
