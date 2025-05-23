@@ -18,7 +18,7 @@ fetch(url, config)
         const args = process.argv.slice(2);
 
         switch (args[0]) {
-            case 'GET':
+            case 'GET':  // npm run start GET products
                 if (args[1] != undefined && args[1] == 'products') {
                     console.log(productos)
                 } else if (args[1] != undefined && args[1].charCodeAt(8) == 47) {
@@ -27,10 +27,8 @@ fetch(url, config)
                 } else {
                     console.log("No se ha pasado un dato");
                 }
-
                 break;
-
-            case 'POST': // npm run start POST products title=T-Shirt-Rex price=300 category=remeras
+            case 'POST': // npm run start POST products T-Shirt-Rex 300 remeras
                 if (args[1] === undefined || args[1] != 'products' || args[2] === undefined || args[3] === undefined || args[4] === undefined) {
                     console.log(`No se ha pasado el argumento esperado`);
                 } else {
@@ -48,20 +46,17 @@ fetch(url, config)
                         .then(response => response.json())
                         .then(data => console.log(data))
                         .catch(error => console.error('Error:', error));
-
-                    //console.log(`Recibimos ${args[2]}, ${args[3]} y ${args[4]} satisfactoriamente`);
                 }
                 break;
-            /*case 'PUT':
-                if (args[1] != undefined) {
-                    console.log(`Modificamos el item con id: ${args[1]}  satisfactoriamente`);
-                } else {
-                    console.log(`No se ha podido modificar el item, no se ha pasado el id`);
-                }
-                break;*/
-            case 'DELETE':
-                if (args[1] !== undefined) {
-                    console.log(`El item con id: ${args[1]}  se eliminó con éxito`);
+            case 'DELETE': //npm run start DELETE products/7
+                if (args[1] !== undefined && args[1].charCodeAt(8) == 47 && args[1].length > 9) {
+                    let id = obtenerId(args[1])
+                    fetch(url + '/' + id, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(data => console.log("Producto eliminado", data))
+                        .catch(error => console.error('Error al eliminar el producto:', error));
                 } else {
                     console.log(`No se ha podido eliminar el item, no se ha pasado el id`);
                 }
