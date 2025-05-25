@@ -1,6 +1,9 @@
 const url = 'https://fakestoreapi.com/products';
-const config = {
+const configGet = {
     method: 'GET'
+    , headers: {
+        'Content-Type': 'application/json'
+    }
 };
 const productos = [];
 const obtenerId = function id(p) {
@@ -8,7 +11,7 @@ const obtenerId = function id(p) {
     return texto[1]
 };
 
-fetch(url, config)
+fetch(url, configGet)
     .then((response) => response.json())
     .then((data) => {
         data.forEach((element) => {
@@ -28,7 +31,7 @@ fetch(url, config)
                     console.log("No se ha pasado un dato");
                 }
                 break;
-            case 'POST': // npm run start POST products T-Shirt-Rex 300 remeras
+            /*case 'POST': // npm run start POST products T-Shirt-Rex 300 remeras
                 if (args[1] === undefined || args[1] != 'products' || args[2] === undefined || args[3] === undefined || args[4] === undefined) {
                     console.log(`No se ha pasado el argumento esperado`);
                 } else {
@@ -47,7 +50,27 @@ fetch(url, config)
                         .then(data => console.log(data))
                         .catch(error => console.error('Error:', error));
                 }
+                break;*/
+            //*********************************** */
+            case 'POST':
+                if (args.length < 5) {
+                    console.log("Faltan argumentos");
+                    break;
+                }
+
+                const [, , title, price, category] = args;
+                const nuevoProducto = { title, price, category };
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(nuevoProducto)
+                })
+                    .then(response => response.json())
+                    .then(data => console.log("Producto creado:", data));
                 break;
+
+            /************************************ */
             case 'DELETE': //npm run start DELETE products/7
                 if (args[1] !== undefined && args[1].charCodeAt(8) == 47 && args[1].length > 9) {
                     let id = obtenerId(args[1])
